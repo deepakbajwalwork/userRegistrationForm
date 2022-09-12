@@ -4,7 +4,16 @@ import 'package:registerform/constants/color_constants.dart';
 class CommonButton extends StatelessWidget {
   final String? buttonText;
   final GestureTapCallback? onTap;
-  const CommonButton({Key? key, this.buttonText = '', @required this.onTap})
+  final bool isborder;
+
+  final double width;
+  const CommonButton(
+      {Key? key,
+      this.buttonText = '',
+      @required this.onTap,
+      required this.width,
+      required,
+      required this.isborder})
       : super(key: key);
 
   @override
@@ -12,14 +21,22 @@ class CommonButton extends StatelessWidget {
     return InkWell(
       onTap: onTap!,
       child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 60,
-        color: ColorConstants.primaryThemeColor,
+        width: isborder == true ? width - 1 : width,
+        height: isborder == true ? 60 - 1 : 60,
+        decoration: BoxDecoration(
+            color: isborder == true
+                ? Colors.white
+                : ColorConstants.primaryThemeColor,
+            border: isborder == true
+                ? Border.all(width: 1, color: ColorConstants.primaryThemeColor)
+                : Border.all(width: 0)),
         child: Center(
           child: Text(
             buttonText!,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: isborder == true
+                  ? ColorConstants.primaryThemeColor
+                  : Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),

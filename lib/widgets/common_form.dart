@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:registerform/constants/color_constants.dart';
 
 class CommonForm extends StatelessWidget {
   final IconData? prefixIcon;
   final String? hintText;
   final String? title;
+  final TextEditingController? controller;
+  final Function(String?)? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
+  final FormFieldValidator<String>? validatorName;
 
-  const CommonForm({Key? key, this.prefixIcon, this.hintText = '', this.title})
-      : super(key: key);
+  final keyboardtype;
+
+  const CommonForm({
+    Key? key,
+    this.prefixIcon,
+    this.hintText = '',
+    this.title,
+    this.controller,
+    this.validatorName,
+    this.keyboardtype,
+    this.onChanged,
+    this.inputFormatters,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +46,15 @@ class CommonForm extends StatelessWidget {
             ),
           },
           SizedBox(
-            height: 55,
             child: TextFormField(
+              onChanged: onChanged,
+              keyboardType: keyboardtype,
+              controller: controller,
+              validator: validatorName,
+              inputFormatters: inputFormatters,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
+                // helperText: "",
                 prefixIcon: prefixIcon != null
                     ? Icon(
                         prefixIcon,
